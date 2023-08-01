@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Coder</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&family=Oswald:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h1 class="hone">Coder</h1>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter&family=Oswald:wght@700&display=swap');
+  </style>
+  </head>
+  <body>
+      <label class="label" for="inputString">Введіть текст для шифрування / дешифрування:</label>
+      <input class="input" type="text" id="inputString">
+      <br>
+      <label class="label">Введіть seed:</label>
+      <input class="seed" type="text" id="seed" onchange="updateSeed()">
+      <br>
+      <p class="label result">Результат: </p>
+      <article class="label result" id="encryptedResult"></article>
+      <br>
+      <button class="button" onclick="encryptAndDisplay()">Зашифрувати</button>
+      <button class="button" onclick="decryptAndDisplay()">Дешифрувати</button>
+      <button class="button down" onclick="copyToClipboard()">Скопіювати в буфер</button>
+      <br>
+  
+      <script>
+          let seed = 0;
+  
+          function updateSeed() {
+              const seedElement = document.getElementById('seed');
+              seed = parseInt(seedElement.value);
+          }
+  
+          function encryptAndDisplay() {
+              const inputElement = document.getElementById('inputString');
+              const resultElement = document.getElementById('encryptedResult');
+              const input = inputElement.value;
+              const encryptedResult = encryptUkrainianAlphabet(input, seed);
+              resultElement.textContent = `${encryptedResult}`;
+          }
+  
+          function decryptAndDisplay() {
+              const inputElement = document.getElementById('inputString');
+              const resultElement = document.getElementById('encryptedResult');
+              const input = inputElement.value;
+              const decryptedResult = decryptUkrainianAlphabet(input, seed);
+              resultElement.textContent = `${decryptedResult}`;
+          }
+  
+          function copyToClipboard() {
+              const resultElement = document.getElementById('encryptedResult');
+              const resultText = resultElement.textContent;
+              const tempInput = document.createElement('input');
+              tempInput.setAttribute('value', resultText);
+              document.body.appendChild(tempInput);
+              tempInput.select();
+              document.execCommand('copy');
+              document.body.removeChild(tempInput);
+          }
+  
+          function encryptUkrainianAlphabet(input, seed) {
+              let encryptedText = '';
+              for (let i = 0; i < input.length; i++) {
+                  const charCode = input.charCodeAt(i);
+                  const encryptedCharCode = charCode + seed;
+                  encryptedText += encryptedCharCode.toString() + '.';
+              }
+              return encryptedText.slice(0, -1);
+          }
+  
+          function decryptUkrainianAlphabet(input, seed) {
+              const encryptedChars = input.split('.');
+              let decryptedText = '';
+              for (let i = 0; i < encryptedChars.length; i++) {
+                  const encryptedCharCode = parseInt(encryptedChars[i]);
+                  const decryptedCharCode = encryptedCharCode - seed;
+                  decryptedText += String.fromCharCode(decryptedCharCode);
+              }
+              return decryptedText;
+          }
+      </script>
+  </body>
+  </html>
+  
+</body>
+</html>
