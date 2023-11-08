@@ -1,28 +1,23 @@
 function encryptUkrainianAlphabet(inputString) {
-    // Український алфавіт
     const ukrAlphabet = 'АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ';
-  
-    // Перетворення рядка на масив символів та шифрування
+
     const encryptedString = inputString
       .split('')
       .map((char) => {
-        const lowerChar = char.toUpperCase(); // Враховуємо, що регістр може бути різним
+        const lowerChar = char.toUpperCase();
         const index = ukrAlphabet.indexOf(lowerChar);
-        return index !== -1 ? index + 1 : char; // Якщо символ не знайдено, залишаємо його без змін
+        return index !== -1 ? index + 1 : char;
       })
       .join('.');
   
-    return encryptedString.replace(/ /g, ','); // Заміна пробілів на коми
+    return encryptedString.replace(/ /g, ',');
   }
   
-  // Приклад використання:
-  const input = 'Привіт, Сvіт!'; // Введений рядок
+  const input = '';
   const encryptedResult = encryptUkrainianAlphabet(input);
-  console.log(encryptedResult); // Результат: 16.18.10.14.1.20,15.19.21.14.10,1,19.4.8.20
+  console.log(encryptedResult);
   
-// script.js
 function decryptUkrainianAlphabet(inputString) {
-    // Український алфавіт
     const ukrAlphabet = 'АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ';
   
     // Перетворення рядка на масив символів та дешифрування
@@ -31,26 +26,12 @@ function decryptUkrainianAlphabet(inputString) {
       .map((item) => {
         if (!isNaN(item)) {
           const index = parseInt(item, 10) - 1;
-          return ukrAlphabet[index] || ''; // Перевіряємо, чи індекс знаходиться в межах алфавіту
+          return ukrAlphabet[index] || '';
         } else {
           return item;
         }
       })
       .join('');
   
-    return decryptedString.replace(/,/g, ' '); // Заміна ком на пробіл
+    return decryptedString.replace(/,/g, ' ');
   }
-
-var validUsername = 'QAZX-SWER-DFVG-BH-POIU';
-var validPassword = 'ZXCV-BNM-LKJH-HG-POIU';
-
-function checkLogin() {
-    var username = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
-
-    if (username === validUsername && password === validPassword) {
-        window.location.href = 'coder.html';
-    } else {
-        alert('Неправильний логін або пароль!');
-    }
-}
